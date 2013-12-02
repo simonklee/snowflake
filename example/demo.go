@@ -5,16 +5,22 @@ github.com/twitter/snowflake in golang
 package main
 
 import (
-	"github.com/sdming/gosnow"
+	"github.com/simonz05/snowflake"
 	"fmt"
 )
 
 func main() {
-
-	v := gosnow.Default()
-	//v := gosnow.NewSnowFlake(100)
+	v, err := snowflake.Default()
+	if err != nil {
+		panic(err)
+	}
+	//v := snowflake.NewSnowflake(100)
 	for i := 0; i < 10; i++ {
-		id := v.Next()
-		fmt.Println(id)
+		id, err := v.Next()
+		if err != nil {
+			fmt.Printf("err: %v", err)
+		} else {
+			fmt.Println(id)
+		}
 	}
 }
